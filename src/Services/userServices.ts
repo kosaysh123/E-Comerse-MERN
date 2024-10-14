@@ -1,10 +1,4 @@
-import UserModel from "../../models/userModel";
-import {  hashSync } from "bcrypt-ts";
-
-
-const hash = hashSync("bacon", 8);
-
-
+import UserModel from "../models/userModel";
 import jwt from "jsonwebtoken";
 
 
@@ -25,8 +19,7 @@ export const register = async ({
   if (findUser) {
     return { data: "User already Register", statesCode: 400 };
   }
-  const hashPassword = hashSync(password, 10);
-  const newUser = new UserModel({ firstName, lastName, email, password : hashPassword });
+  const newUser = new UserModel({ firstName, lastName, email, password  });
   await newUser.save();
   return {
     data: generateToken({ email, password, firstName, lastName }),

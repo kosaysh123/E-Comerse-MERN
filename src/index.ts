@@ -1,6 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
-import { userRouter } from "./Routers/userRouter";
+import  userRouter  from "./Routers/userRouter";
+import  ProductRouter  from "./Routers/ProductRouter";
+import { SeedInitialProducts } from "./Services/ProductServices";
+
 
 const app = express();
 const port = 3002;
@@ -13,7 +16,11 @@ mongoose
   .catch(() => {
     console.log("Conacte Erorr");
   });
+
+  // Seed data to Database
+  SeedInitialProducts()
   app.use("/user", userRouter)
+  app.use("/product", ProductRouter)
 
 app.listen(port, () => {
     console.log(`Server Is Running at : http://localhost/${port}`)
